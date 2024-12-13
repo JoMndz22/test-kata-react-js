@@ -65,7 +65,10 @@ const AlbumPage = () => {
       <h1 className="text-center uppercase p-5 font-bold text-3xl">
         - Album Details - {localStorage.getItem("title")}
       </h1>
-      <hr className="mb-10" />
+      <hr />
+      <h4 className="text-gray-400 text-center mb-5 mt-2 uppercase font-semibold">
+        {localStorage.getItem("title")}
+      </h4>
       <div className="container mx-auto">
         <input
           type="text"

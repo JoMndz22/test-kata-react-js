@@ -9,7 +9,7 @@ const Album = ({ title, id }: AlbumItem) => {
   const navigate = useNavigate();
 
   const goToAlbumById = (id: number) => {
-    localStorage.setItem(title, title);
+    localStorage.setItem("title", title);
     navigate(`/album/${id}`);
   };
 
