@@ -1,4 +1,4 @@
-import { AlbumData } from "../pages/Home";
+import { AlbumData } from "../pages/Home/Home";
 
 interface AlbumCardProps extends AlbumData {
   setDataDetails: (album: AlbumData) => void;

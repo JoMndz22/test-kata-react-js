@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-import Album from "../components/Album";
-import Loading from "../components/Loading";
+import Album from "../../components/Album";
+import Loading from "../../components/Loading";
+import useHomeHook from "./useHomeHook";
 
 export interface AlbumsProps {
   userId: number;
@@ -20,25 +18,7 @@ export interface AlbumData {
 }
 
 const Home = () => {
-  const [albums, setAlbums] = useState<AlbumsProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const getData = async () => {
-    try {
-      const req = await axios.get(
-        "https://jsonplaceholder.typicode.com/albums"
-      );
-      setAlbums(req.data);
-      setLoading(false);
-    } catch (error) {
-      setError(JSON.stringify(error));
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const { error, loading, albums } = useHomeHook();
 
   return (
     <div>
