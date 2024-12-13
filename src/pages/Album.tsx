@@ -23,7 +23,11 @@ const AlbumPage = () => {
       const getData = await axios.get(
         `https://jsonplaceholder.typicode.com/albums/${id}/photos`
       );
-      setAlbumData(getData.data);
+      const addFavoriteProp = getData.data.map((album: AlbumData) => ({
+        ...album,
+        favorite: false,
+      }));
+      setAlbumData(addFavoriteProp);
       setLoading(false);
     } catch (error: unknown) {
       setError(JSON.stringify(error));
@@ -43,16 +47,28 @@ const AlbumPage = () => {
     setAlbumSelected(album);
   };
 
+  const onAddFavorite = (id: number) => {
+    setAlbumData((prevAlbums) =>
+      prevAlbums.map((album) =>
+        album.id === id ? { ...album, favorite: !album.favorite } : album
+      )
+    );
+    if (albumSelected && albumSelected.id === id) {
+      setAlbumSelected((prev) =>
+        prev ? { ...prev, favorite: !prev.favorite } : prev
+      );
+    }
+  };
+
   const closeModal = () => {
     setAlbumSelected(null);
   };
 
   useEffect(() => {
     getDetailsAlbum();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
-    console.log(albumSelected);
     if (albumSelected) {
       setVisibleModal(true);
       return;
@@ -63,7 +79,7 @@ const AlbumPage = () => {
   return (
     <div className="">
       <h1 className="text-center uppercase p-5 font-bold text-3xl">
-        - Album Details - {localStorage.getItem("title")}
+        - Album Details -
       </h1>
       <hr />
       <h4 className="text-gray-400 text-center mb-5 mt-2 uppercase font-semibold">
@@ -82,7 +98,7 @@ const AlbumPage = () => {
             <Loading />
           ) : (
             filterAlbums.map((album: AlbumData) => {
-              const { id, title, thumbnailUrl, albumId, url } = album;
+              const { id, title, thumbnailUrl, albumId, url, favorite } = album;
               return (
                 <AlbumCard
                   key={id}
@@ -91,6 +107,7 @@ const AlbumPage = () => {
                   thumbnailUrl={thumbnailUrl}
                   albumId={albumId}
                   url={url}
+                  favorite={favorite}
                   setDataDetails={onViewDetails}
                 />
               );
@@ -103,6 +120,7 @@ const AlbumPage = () => {
         visible={visibleModal}
         albumSelected={albumSelected}
         closeModal={closeModal}
+        onAddFavorite={onAddFavorite}
       />
     </div>
   );

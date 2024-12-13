@@ -16,6 +16,7 @@ export interface AlbumData {
   title: string;
   url: string;
   thumbnailUrl: string;
+  favorite?: boolean;
 }
 
 const Home = () => {

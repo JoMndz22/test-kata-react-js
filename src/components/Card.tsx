@@ -10,11 +10,19 @@ const AlbumCard = ({
   thumbnailUrl,
   albumId,
   url,
+  favorite,
   setDataDetails,
 }: AlbumCardProps) => {
   return (
     <div key={id} className="w-1/3 p-2 flex">
-      <div className="bg-gray-200 p-2 rounded-md flex flex-col h-full w-full">
+      <div className="bg-gray-200 p-2 rounded-md flex flex-col h-full w-full relative">
+        {favorite && (
+          <div className="absolute top-3 right-2 bg-blue-900 rounded-md px-2">
+            <p className="text-white text-[10px] uppercase font-bold">
+              Favorite
+            </p>
+          </div>
+        )}
         <img
           src={thumbnailUrl}
           className="rounded-md mx-auto mb-2"
@@ -30,6 +38,7 @@ const AlbumCard = ({
               thumbnailUrl,
               albumId,
               url,
+              favorite,
             })
           }
         >
